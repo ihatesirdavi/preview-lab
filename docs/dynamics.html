@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="DYNAMICS-002: a bounded and independently tested three-body gravitational demonstration.">
+  <title>DYNAMICS-002 | Preview Lab</title>
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="dynamics.css">
+  <script src="dynamics-core.js" defer></script>
+  <script src="dynamics.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a href="./" class="brand" aria-label="Back to Preview Lab">
+      <span class="brand-mark" aria-hidden="true">S<span class="mark-line">/</span>D</span>
+      <span>SIR DAVI <span class="brand-light">/ PREVIEW LAB</span></span>
+    </a>
+    <span class="scope">DYNAMICS-002 / PUBLIC PROTOTYPE</span>
+  </header>
+  <main>
+    <section class="dynamics-intro" aria-labelledby="study-title">
+      <div class="eyebrow"><span class="state-dot" aria-hidden="true"></span> ORIGINAL PUBLIC STUDY / 002</div>
+      <h1 id="study-title">Three bodies.<br><em>One coupled system.</em></h1>
+      <p class="lede">A small experiment in emergent motion. Three masses, one gravitational field and an integrator you can test. No private project connection or claimed production release.</p>
+      <div class="meta">
+        <span><b>CODENAME</b> DYNAMICS-002</span>
+        <span><b>MODEL</b> SOFTENED NEWTONIAN</span>
+        <span><b>STATUS</b> PROTOTYPE</span>
+      </div>
+    </section>
+    <section class="viewer dynamics-viewer" aria-label="Three-body simulation and bounded playback controls">
+      <div class="viewer-head">
+        <div><span class="overline">MODEL 002 / DETERMINISTIC STEP</span><h2>Orbital interaction <span class="dim">/ planar dynamics</span></h2></div>
+        <div class="live-label"><span id="orbit-led" class="dot idle" aria-hidden="true"></span><span id="orbit-state">INITIALIZING</span></div>
+      </div>
+      <div class="stage orbit-stage">
+        <canvas id="orbit-canvas" width="1100" height="620" role="img" aria-label="Three colored bodies follow dynamically calculated paths through a dark coordinate field">This study requires canvas support to draw the paths.</canvas>
+        <div class="stage-overlay">
+          <div class="stage-top"><span>LIVE COMPUTATION / CPU</span><span>12 SEC HARD STOP</span></div>
+          <div class="stage-bottom"><span>GRAVITY / G=1</span><span>VELOCITY VERLET</span></div>
+        </div>
+      </div>
+      <div class="orbit-stats" aria-label="Measured simulation values">
+        <div><span class="stat-label">SIMULATION TIME</span><strong id="sim-time">0.000</strong><span class="unit">units</span></div>
+        <div><span class="stat-label">RELATIVE ENERGY DRIFT</span><strong id="energy-drift">0.000</strong><span class="unit">%</span></div>
+        <div><span class="stat-label">RENDER FPS</span><strong id="actual-fps">0</strong><span class="unit">observed</span></div>
+        <div><span class="stat-label">FRAME TARGET</span><strong id="fps-cap">60</strong><span class="unit">fps max</span></div>
+      </div>
+      <div class="controls orbit-controls">
+        <fieldset class="modes" aria-label="Rendering budget">
+          <legend>Rendering profile (physics unchanged)</legend>
+          <button type="button" class="mode selected" data-budget="quality" aria-pressed="true">Quality / 60</button>
+          <button type="button" class="mode" data-budget="efficiency" aria-pressed="false">Efficiency / 30</button>
+        </fieldset>
+        <div class="playback" role="group" aria-label="Simulation playback">
+          <button type="button" id="orbit-play">Replay 12s</button>
+          <button type="button" id="orbit-pause" disabled>Pause</button>
+          <button type="button" id="orbit-stop">Reset</button>
+        </div>
+      </div>
+      <div class="progress" aria-hidden="true"><span id="orbit-progress"></span></div>
+      <p class="viewer-note" role="status" aria-live="polite" id="orbit-status">Ready. Rendering is static until you press Replay.</p>
+    </section>
+    <section class="details" aria-label="Model, reproducibility, and limitations">
+      <article><span class="overline">01 / MECHANISM</span><h3>Forces, then motion.</h3>
+        <p>Pairwise softened inverse-square gravity drives each body. A symmetric velocity Verlet step integrates the system at a fixed interval of 0.002 simulation units.</p></article>
+      <article><span class="overline">02 / VERIFICATION</span><h3>Reproducible, not magic.</h3>
+        <p>Source tests check momentum, pairwise symmetry, determinism, energy drift and close approaches. Live numerical drift is shown above and does not represent astronomical error bars.</p></article>
+      <article><span class="overline">03 / PERFORMANCE</span><h3>Two rendering budgets.</h3>
+        <p>Quality targets up to 60 FPS; Efficiency targets up to 30 FPS. The simulation stepping is identical. Observed FPS is a local browser measurement, not a GPU benchmark.</p></article>
+    </section>
+    <nav class="orbit-bottom-nav" aria-label="Other previews">
+      <a href="./">SIGNAL-001 / Visual signal field</a>
+      <a href="https://github.com/ihatesirdavi/preview-lab">Source, tests and review state</a>
+    </nav>
+  </main>
+  <footer><span>PUBLIC / DYNAMICS-002</span><span>OWNER REVIEW PENDING · NO PRIVATE SOURCE · NOT PACKAGED</span></footer>
+</body>
+</html>

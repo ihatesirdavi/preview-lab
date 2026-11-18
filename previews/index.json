@@ -14,6 +14,20 @@
                                         "packaging":  "not_packaged"
                                     },
                          "browser_receipt":  "scripts/browser_smoke.py; native Chrome headless Windows 11, Nov 18 2026: READY, mode, accessibility, Play, immediate Pause/Resume, Stop, reset, Signal mode."
+                     },
+                     {
+                         "id":  "dynamics-002",
+                         "title":  "Three-Body Dynamics",
+                         "asset":  "docs/dynamics.html",
+                         "classification":  "standalone-public",
+                         "state":  "prototype",
+                         "checks":  {
+                                        "source":  "passed",
+                                        "browser":  "passed",
+                                        "owner_review":  "pending",
+                                        "packaging":  "not_packaged"
+                                    },
+                         "browser_receipt":  "scripts/browser_smoke.py; isolated Chrome smoke on Windows 11, Nov 18 2026: canvas, both budgets, mode accessibility, Replay, immediate Pause/Resume, Reset."
                      }
                  ]
 }
