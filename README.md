@@ -19,11 +19,22 @@ The real Chrome capture confirms browser startup; the reproducible native Chrome
 - Reduced-motion settings are respected by showing a static field until the user explicitly requests playback.
 - This is a visual interaction prototype, not an application release, hardware benchmark, or statement about any private project.
 
+## DYNAMICS-002 / Three-body study
+
+[Open the original interactive study](docs/dynamics.html). The standalone planar solver models three unit masses with softened Newtonian gravity (G=1), fixed timestep 0.002 and velocity Verlet integration.
+
+![Real headless Chrome capture of DYNAMICS-002](docs/dynamics-still.png)
+
+- **Two deliberately different rendering budgets:** 60 FPS target / up to 2x device pixels for visual quality and 30 FPS target / up to 1x pixels for reduced load. Both use the same deterministic physics step, not different simulations.
+- **Bounded runtime:** 12 wall-clock seconds, no autoplay, explicit Replay / Pause / Resume / Reset, and automatic pause when hidden.
+- **Native model verification:** eight Node.js tests cover initial symmetry, momentum, pairwise forces, determinism, energy conservation over 3,000 steps, error handling and finite close approaches. The measured relative energy drift for that sample is 0.000139%. This is a numerical observation for this initial condition, not an astronomical accuracy or benchmark claim.
+- **Browser verification:** the shared isolated Chrome smoke checks both studies, including mode changes and immediate pause/resume. Owner visual acceptance and packaging remain separate.
+- **Provenance:** independently authored educational preview; no connection or source mapping to any private application.
 ## Transition and release evidence
 
 The [public preview catalog](previews/index.json) is validated by the [source validator](scripts/validate_preview.py). Every entry names a codename, local asset, visibility classification, maturity stage and evidence states for source, browser, owner review and packaging.
 
-Current status: **prototype**. Source checks and a native Chrome control smoke are tested. [Reproduce the browser smoke](scripts/browser_smoke.py); it checks interaction in an isolated browser and does not substitute for owner visual acceptance. Owner review/acceptance remains **pending**. Packaging is **not packaged**.
+Current status: **two public prototypes** (SIGNAL-001 and DYNAMICS-002). Source checks, physics regression tests and an isolated Chrome control smoke are tested. [Reproduce the browser smoke](scripts/browser_smoke.py); it checks interaction in an isolated browser and does not substitute for owner visual acceptance. Owner review/acceptance remains **pending**. Packaging is **not packaged**.
 
 A green source test does not make a demo installed, browser-tested, packaged, operational or owner-accepted. Promotion requires separate, attributable receipts and owner authorization.
 

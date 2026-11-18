@@ -44,6 +44,40 @@ window.addEventListener("load",()=> {
 </script></html>"""
 
 
+DYNAMICS_HARNESS = """<!doctype html><html lang="en"><meta charset="utf-8"><title>DYNAMICS-002 control smoke</title>
+<iframe id="demo" src="dynamics.html"></iframe><output id="verdict" data-test="pending">PENDING</output>
+<script>
+window.addEventListener("load",()=>{
+ const result=document.getElementById("verdict"),bad=[];
+ try {
+   const d=document.getElementById("demo").contentDocument;
+   const el=id=>d.getElementById(id);
+   const check=(condition,label)=>{if(!condition)bad.push(label)};
+   check(el("orbit-state").textContent==="READY","initial ready");
+   check(d.querySelector("h1").textContent.includes("Three bodies."),"study headline");
+   check(el("orbit-canvas").width>0 && el("orbit-canvas").height>0,"real canvas");
+   check(d.defaultView.DynamicsCore.createInitial().length===3,"physics module loaded");
+   d.querySelector('[data-budget="efficiency"]').click();
+   check(el("fps-cap").textContent==="30","efficiency budget");
+   check(d.querySelector('[data-budget="efficiency"]').getAttribute("aria-pressed")==="true","budget accessibility");
+   d.querySelector('[data-budget="quality"]').click();
+   check(el("fps-cap").textContent==="60","quality budget");
+   el("orbit-play").click();
+   check(el("orbit-state").textContent==="RUNNING","play");
+   el("orbit-pause").click();
+   check(el("orbit-state").textContent==="PAUSED","immediate pause");
+   el("orbit-pause").click();
+   check(el("orbit-state").textContent==="RUNNING","immediate resume");
+   el("orbit-stop").click();
+   check(el("orbit-state").textContent==="RESET","reset");
+   check(parseFloat(el("orbit-progress").style.width)===0,"progress reset");
+   check(parseFloat(el("sim-time").textContent)===0,"physics time reset");
+ } catch(error){bad.push("exception: "+String(error));}
+ result.setAttribute("data-test",bad.length?"failed":"passed");
+ result.textContent=bad.join(",")||"DYNAMICS_CONTROLS_PASSED";
+});
+</script></html>"""
+
 def find_browser():
     choices = [
         os.environ.get("PREVIEW_CHROME"),
@@ -60,41 +94,45 @@ def find_browser():
 
 
 def run():
+    """Run both public studies through one isolated browser-test runner."""
     browser = find_browser()
-    with tempfile.NamedTemporaryFile(
-        mode="w", encoding="utf-8", suffix=".html",
-        prefix=".__preview_smoke_", dir=DOCS, delete=False
-    ) as stream:
-        stream.write(HARNESS)
-        harness = Path(stream.name)
-    try:
-        with tempfile.TemporaryDirectory(prefix="public-preview-chrome-") as profile:
-            argv = [
-                str(browser), "--headless=new", "--no-first-run",
-                "--no-default-browser-check", "--disable-extensions",
-                "--disable-background-networking", "--disable-sync",
-                "--disable-gpu", "--allow-file-access-from-files",
-                f"--user-data-dir={profile}", "--virtual-time-budget=1100",
-                "--window-size=1100,760", "--dump-dom", harness.as_uri()
-            ]
-            result = subprocess.run(
-                argv, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                text=True, encoding="utf-8", errors="replace", timeout=40
-            )
-        if result.returncode:
-            raise RuntimeError(f"Browser process exit {result.returncode}")
-        if not re.search(r'<output id="verdict" data-test="passed"', result.stdout):
-            reason = re.search(
-                r'<output id="verdict" data-test="failed">([^<]*)</output>',
-                result.stdout
-            )
-            raise AssertionError("Browser control failure: " + (
-                reason.group(1) if reason else "no dynamic result"
-            ))
-        print("Native browser smoke passed: READY, mode, Play, immediate Pause/Resume, Stop, reset, mode.")
-    finally:
-        harness.unlink(missing_ok=True)
-
+    for name, template in (
+        ("SIGNAL-001", HARNESS),
+        ("DYNAMICS-002", DYNAMICS_HARNESS),
+    ):
+        with tempfile.NamedTemporaryFile(
+            mode="w", encoding="utf-8", suffix=".html",
+            prefix=".__preview_smoke_", dir=DOCS, delete=False
+        ) as stream:
+            stream.write(template)
+            harness = Path(stream.name)
+        try:
+            with tempfile.TemporaryDirectory(prefix="public-preview-chrome-") as profile:
+                argv = [
+                    str(browser), "--headless=new", "--no-first-run",
+                    "--no-default-browser-check", "--disable-extensions",
+                    "--disable-background-networking", "--disable-sync",
+                    "--disable-gpu", "--allow-file-access-from-files",
+                    f"--user-data-dir={profile}", "--virtual-time-budget=1600",
+                    "--window-size=1100,760", "--dump-dom", harness.as_uri()
+                ]
+                result = subprocess.run(
+                    argv, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                    text=True, encoding="utf-8", errors="replace", timeout=50
+                )
+            if result.returncode:
+                raise RuntimeError(f"{name}: browser exit {result.returncode}")
+            if not re.search(r'<output id="verdict" data-test="passed"', result.stdout):
+                reason = re.search(
+                    r'<output id="verdict" data-test="failed">([^<]*)</output>',
+                    result.stdout
+                )
+                raise AssertionError(f"{name}: " + (
+                    reason.group(1) if reason else "no dynamic result"
+                ))
+            print(f"{name} native Chrome controls passed.")
+        finally:
+            harness.unlink(missing_ok=True)
 
 if __name__ == "__main__":
     try:
