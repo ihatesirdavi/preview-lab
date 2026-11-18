@@ -8,7 +8,7 @@
   const indicator = document.getElementById("indicator"), progress = document.getElementById("progress-fill");
   const readout = document.getElementById("mode-readout");
   const MAX_DURATION_MS = 12000, FRAME_MS = 1000/30;
-  let mode = "orbit", running = false, elapsed = 0, previous = null, raf = 0, width = 960, height = 540, dpr = 1;
+  let mode = "orbit", running = false, started = false, elapsed = 0, previous = null, raf = 0, width = 960, height = 540, dpr = 1;
   let seed = 39827;
   function random() { seed = (Math.imul(seed,1664525)+1013904223)>>>0; return seed/4294967296; }
   const stars = Array.from({length:100},()=>({x:random(),y:random(),phase:random()*6.28,size:.4+random()*1.3}));
@@ -62,7 +62,7 @@
   function report(label,message){
     state.textContent=label;indicator.classList.toggle("running",running);status.textContent=message;
     progress.style.width=(100*elapsed/MAX_DURATION_MS).toFixed(1)+"%";
-    pause.disabled=(!running&&elapsed===0)||elapsed>=MAX_DURATION_MS;
+    pause.disabled=(!running&&!started)||elapsed>=MAX_DURATION_MS;
     pause.textContent=running?"Pause":"Resume";
   }
   function frame(ts){
@@ -78,7 +78,7 @@
   function start(){
     cancelAnimationFrame(raf);
     if(elapsed>=MAX_DURATION_MS)elapsed=0;
-    running=true;previous=null;report("PLAYING","Playing "+mode+" mode, for up to 12 seconds.");
+    running=true;started=true;previous=null;report("PLAYING","Playing "+mode+" mode, for up to 12 seconds.");
     raf=requestAnimationFrame(frame);
   }
   function freeze(message){
@@ -87,7 +87,7 @@
   }
   play.addEventListener("click",()=>{elapsed=0;start();});
   pause.addEventListener("click",()=>running?freeze():start());
-  stop.addEventListener("click",()=>{cancelAnimationFrame(raf);running=false;previous=null;elapsed=0;draw(0);report("STOPPED","Stopped and reset. No animation remains running.");});
+  stop.addEventListener("click",()=>{cancelAnimationFrame(raf);running=false;started=false;previous=null;elapsed=0;draw(0);report("STOPPED","Stopped and reset. No animation remains running.");});
   buttons.forEach(button=>button.addEventListener("click",()=>{
     mode=button.dataset.mode;
     buttons.forEach(b=>{const selected=b===button;b.classList.toggle("selected",selected);b.setAttribute("aria-pressed",String(selected));});
