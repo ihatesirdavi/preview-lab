@@ -10,7 +10,7 @@ The first [source-backed preview](docs/index.html) contains three procedural int
 
 ![Real headless Chrome capture of the first public preview](docs/preview-still.png)
 
-A bounded headless Chrome startup smoke confirmed that the original HTML, CSS and JavaScript loaded and generated this capture. Interactive controls, full accessibility behavior, and human visual acceptance still require separate review.
+The real Chrome capture confirms browser startup; the reproducible native Chrome control smoke also checks mode switching, accessibility selection, Play, immediate Pause/Resume, Stop and reset. Full accessibility auditing and human visual acceptance are separate review gates.
 
 - Pure checked-in HTML, CSS and JavaScript. No runtime dependencies, network calls, analytics, external fonts or private source.
 - Playback requires an explicit click, lasts at most **12 seconds**, and is limited to about **30 frames per second**. Pause, Resume and Stop controls work locally. Background tabs pause automatically.
@@ -21,7 +21,7 @@ A bounded headless Chrome startup smoke confirmed that the original HTML, CSS an
 
 The [public preview catalog](previews/index.json) is validated by the [source validator](scripts/validate_preview.py). Every entry names a codename, local asset, visibility classification, maturity stage and evidence states for source, browser, owner review and packaging.
 
-Current status: **prototype**. Source checks run in CI. Browser review is **NOT_RUN** until actually exercised in a browser. Owner review/acceptance of the public prototype is **pending**. Packaging is **not packaged**.
+Current status: **prototype**. Source checks and a native Chrome control smoke are tested. [Reproduce the browser smoke](scripts/browser_smoke.py); it checks interaction in an isolated browser and does not substitute for owner visual acceptance. Owner review/acceptance remains **pending**. Packaging is **not packaged**.
 
 A green source test does not make a demo installed, browser-tested, packaged, operational or owner-accepted. Promotion requires separate, attributable receipts and owner authorization.
 
@@ -37,6 +37,7 @@ Reproduce validation locally:
 
     python -m unittest discover -s tests -v
     python scripts/validate_preview.py
+    python scripts/browser_smoke.py
 
 To run the static page without background infrastructure, start a temporary local server:
 
