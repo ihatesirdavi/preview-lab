@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="An original bounded visual prototype. A public preview, not a packaged application.">
+  <title>SIGNAL-001 | Sir Davi Preview Lab</title>
+  <link rel="stylesheet" href="site.css">
+  <script src="site.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a href="./" class="brand" aria-label="Sir Davi Preview Lab home">
+      <span class="brand-mark" aria-hidden="true">S<span class="mark-line">/</span>D</span>
+      <span>SIR DAVI <span class="brand-light">/ PREVIEW LAB</span></span>
+    </a>
+    <span class="scope">PUBLIC / STANDALONE / 001</span>
+  </header>
+  <main>
+    <section class="intro" aria-labelledby="headline">
+      <div class="eyebrow"><span class="state-dot" aria-hidden="true"></span> VISUAL PROTOTYPE · NOT A PRODUCT RELEASE</div>
+      <h1 id="headline">I code <em>sometimes.</em></h1>
+      <p class="lede">Mostly, I build things around what they <strong>do</strong> and how they <strong>feel</strong>. Code is just one instrument.</p>
+      <div class="meta">
+        <span><b>CODENAME</b> SIGNAL-001</span>
+        <span><b>FORMAT</b> INTERACTIVE VISUAL</span>
+        <span><b>STATE</b> PROTOTYPE</span>
+      </div>
+    </section>
+    <section class="viewer" aria-label="Interactive public visual preview">
+      <div class="viewer-head">
+        <div>
+          <span class="overline">EXPERIMENT 001</span>
+          <h2>Signal field <span class="dim">/ three states</span></h2>
+        </div>
+        <div class="live-label"><span id="indicator" class="dot idle"></span><span id="play-state">INITIALIZING</span></div>
+      </div>
+      <div class="stage">
+        <canvas id="field" width="960" height="540" role="img" aria-label="Abstract procedural light field with three selectable visual modes and bounded playback">
+          Signal Field requires canvas support. The remaining description and controls are still accessible.
+        </canvas>
+        <div class="stage-overlay" aria-hidden="true">
+          <div class="stage-top"><span>VISUAL STUDY / 01</span><span>12 SEC MAX</span></div>
+          <div class="stage-bottom"><span id="mode-readout">ORBITAL</span><span>NO PRIVATE SOURCE</span></div>
+        </div>
+      </div>
+      <div class="controls">
+        <fieldset class="modes" aria-label="Visual mode">
+          <legend>Mode</legend>
+          <button type="button" class="mode selected" data-mode="orbit" aria-pressed="true">01 / Orbit</button>
+          <button type="button" class="mode" data-mode="wave" aria-pressed="false">02 / Wave</button>
+          <button type="button" class="mode" data-mode="signal" aria-pressed="false">03 / Signal</button>
+        </fieldset>
+        <div class="playback" role="group" aria-label="Preview playback">
+          <button type="button" id="play">Replay 12s</button>
+          <button type="button" id="pause">Pause</button>
+          <button type="button" id="stop">Stop</button>
+        </div>
+      </div>
+      <div class="progress" aria-hidden="true"><span id="progress-fill"></span></div>
+      <p class="viewer-note" role="status" id="status" aria-live="polite">Ready to play. Motion is bounded to twelve seconds and never loops indefinitely.</p>
+    </section>
+    <section class="details" aria-label="Preview scope and evidence">
+      <article>
+        <span class="overline">01 / INTENT</span>
+        <h3>Function before framework.</h3>
+        <p>This is a self-contained visual study, not a mirror of a private application. Three ways to read one field. No telemetry, network calls, or external fonts.</p>
+      </article>
+      <article>
+        <span class="overline">02 / BOUNDARY</span>
+        <h3>Show only what is ready.</h3>
+        <p>Prototype, source-checked. Browser behavior and owner acceptance remain separate evidence gates. Private project names stay undisclosed until release approval.</p>
+      </article>
+      <article>
+        <span class="overline">03 / METHOD</span>
+        <h3>Review, then promote.</h3>
+        <p>Every public preview needs a codename, asset, test result, human-review receipt, and packaging status before stronger claims can be made.</p>
+      </article>
+    </section>
+  </main>
+  <footer><span>SIR DAVI / PUBLIC PREVIEWS</span><span>OWNER-REVIEWED PROCESS · AGENT-ASSISTED WORK · RELEASE GATES PRESERVED</span></footer>
+</body>
+</html>
