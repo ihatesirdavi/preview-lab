@@ -23,7 +23,10 @@ window.addEventListener("load",()=> {
   const d=document.getElementById("demo").contentDocument;
   const el=id=>d.getElementById(id);
   const check=(ok,label)=>{if(!ok)bad.push(label)};
-  check(el("play-state").textContent==="READY","initial ready");
+  const heading=d.querySelector("h1"), aside=d.querySelector(".aside");
+  check(heading && heading.textContent.includes("Function in motion."),"function-led headline");
+  check(aside && aside.textContent==="\u201cI code sometimes\u2026\u201d","exact quoted aside");
+  check(aside && heading && parseFloat(d.defaultView.getComputedStyle(aside).fontSize)<parseFloat(d.defaultView.getComputedStyle(heading).fontSize),"subordinate typography");  check(el("play-state").textContent==="READY","initial ready");
   d.querySelector('[data-mode="wave"]').click();
   check(el("mode-readout").textContent==="WAVEFORM","wave selection");
   check(d.querySelector('[data-mode="wave"]').getAttribute("aria-pressed")==="true","mode accessibility");

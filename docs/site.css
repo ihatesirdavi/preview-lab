@@ -12,12 +12,13 @@ a{color:inherit}
 .scope,.overline,.eyebrow,.meta,.live-label,.stage-overlay,.modes legend,.modes button,.playback button,footer{font-family:var(--mono);font-size:11px;letter-spacing:.08em}
 .scope{color:var(--muted)}
 main{padding:0 32px 90px}
-.intro{padding:86px 0 53px}
+.intro{padding:66px 0 43px}
 .eyebrow{color:var(--aqua);display:flex;gap:11px;align-items:center}
 .state-dot{width:7px;height:7px;border-radius:50%;background:var(--aqua);box-shadow:0 0 14px var(--aqua)}
-h1{font-size:clamp(48px,8.7vw,118px);line-height:1.02;letter-spacing:-.075em;margin:22px 0 23px;font-weight:690}
+h1{font-size:clamp(44px,6.8vw,92px);line-height:1.06;letter-spacing:-.067em;margin:22px 0 20px;font-weight:690}
 h1 em{font-weight:420;font-style:normal;color:var(--aqua)}
-.lede{font-size:clamp(17px,2vw,22px);max-width:690px;color:#a8b8c7;margin:0 0 38px;line-height:1.6}
+.lede{font-size:clamp(17px,2vw,21px);max-width:690px;color:#a8b8c7;margin:0 0 13px;line-height:1.6}
+.aside{font:400 13px/1.7 var(--mono);letter-spacing:.025em;color:#88a0b2;margin:0 0 30px}
 .lede strong{color:var(--ink);font-weight:600}
 .meta{display:flex;flex-wrap:wrap;gap:12px 32px;color:#afc2d0}
 .meta b{font-weight:500;color:#73879c;margin-right:9px}

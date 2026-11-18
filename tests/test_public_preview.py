@@ -23,9 +23,27 @@ class PublicPreviewSourceTests(unittest.TestCase):
         for term in ("fetch(", "XMLHttpRequest", "WebSocket", "localStorage"):
             self.assertNotIn(term, script)
 
+    def test_quote_is_exact_and_subordinate_to_design_headline(self):
+        html = (ROOT / "docs" / "index.html").read_text(encoding="utf-8")
+        self.assertIn("\u201cI code sometimes\u2026\u201d", html)
+        self.assertIn('<p class="aside">', html)
+        self.assertIn("<h1", html)
+        self.assertNotIn("I code", html.split("<h1", 1)[1].split("</h1>", 1)[0])
+        self.assertLess(html.index("<h1"), html.index("“I code sometimes…”"))
+
+    def test_readme_leads_with_preview_and_quotes_aside(self):
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        self.assertTrue(readme.startswith("# Preview Lab"))
+        self.assertIn("\u201cI code sometimes\u2026\u201d", readme)
+
+    def test_quote_is_small_relative_to_headline(self):
+        css = (ROOT / "docs" / "site.css").read_text(encoding="utf-8")
+        self.assertIn(".aside{", css)
+        self.assertIn("font-size:13px", css)
+        self.assertIn("h1{", css)
     def test_no_private_project_name_in_public_readme(self):
         text = (ROOT / "README.md").read_text(encoding="utf-8")
-        self.assertIn("I code sometimes.", text)
+        self.assertIn("\u201cI code sometimes\u2026\u201d", text)
         self.assertIn("SIGNAL-001", text)
         self.assertIn("owner", text.lower())
 

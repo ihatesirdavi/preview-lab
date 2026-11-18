@@ -1,4 +1,6 @@
-# I code sometimes. / Preview Lab
+# Preview Lab
+
+“I code sometimes…”
 
 **A small public window into function, design, visual behavior and verification.**
 
